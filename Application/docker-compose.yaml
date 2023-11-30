@@ -1,0 +1,38 @@
+version: "3"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - NODE_ENV=production
+      - MONGO_URL=mongodb://mongo:27017/avesair
+      - JWT_SECRET=avesair
+      - JWT_EXPIRE=1d
+      - EMAIL_SERVICE = gmail
+      - EMAIL_USERNAME = avesairbooking@gmail.com
+      - EMAIL_PASSWORD = hyxljjrhdndlhkkg
+      - FRONTEND_URL = localhost:3000
+    depends_on:
+      - mongo
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    environment:
+      - BACKEND_API=backend:8000
+    depends_on:
+      - backend
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

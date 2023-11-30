@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  labels:
+    app: mongodb
+spec:
+  ports:
+    - name: mongodb
+      port: 27017
+  clusterIP: None
+  selector:
+    app: mongodb
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+spec:
+  selector:
+    matchLabels:
+      app: mongodb
+  serviceName: mongodb
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:latest
+          args: ["--bind_ip_all", "--replSet", "rs0"]
+          ports:
+            - name: mongodb
+              containerPort: 27017
+  #         volumeMounts:
+  #         - name: data
+  #           mountPath: /data/db
+  # volumeClaimTemplates:
+  # - metadata:
+  #     name: data
+  #   spec:
+  #     accessModes: ["ReadWriteOnce"]
+  #     resources:
+  #       requests:
+  #         storage: 1Gi
