@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const prometheus = require("prom-client");
 const swaggerStats = require("swagger-stats");
 const globalErrorHandler = require("./controller/errorController");
 const AppError = require("./utils/appError");
@@ -24,6 +25,10 @@ app.use(
   })
 );
 
+app.get("/metrics", (req, res) => {
+  res.set("Content-Type", prometheus.register.contentType);
+  res.end(prometheus.register.metrics());
+});
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/flights", flightRoutes);
 app.use("/api/v1/bookings", bookingRoutes);

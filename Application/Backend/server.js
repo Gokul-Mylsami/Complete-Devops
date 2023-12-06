@@ -12,6 +12,7 @@ const app = require("./app");
 
 const DB = process.env.MONGO_URL;
 
+console.log(process.env.MONGO_URL);
 mongoose
   .connect(DB, {
     useNewUrlParser: true,

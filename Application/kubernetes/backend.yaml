@@ -14,32 +14,50 @@ spec:
     spec:
       containers:
         - name: backend
-          image: gokulmsfag/finaltask-backend:latest
+          image: gokulmsfag/finaltask-backend:1.0
           imagePullPolicy: Always
           resources:
             requests:
-              memory: "128Mi"
-              cpu: "500m"
-            limits:
               memory: "256Mi"
               cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "1"
           env:
             - name: PORT
-              value: "8000"
+              valueFrom:
+                configMapKeyRef:
+                  name: application-config
+                  key: PORT
             - name: NODE_ENV
-              value: production
+              valueFrom:
+                configMapKeyRef:
+                  name: application-config
+                  key: NODE_ENV
             - name: MONGO_URL
-              value: mongodb://mongodb-service.default:27017/avesair
+              valueFrom:
+                secretKeyRef:
+                  name: application-secrets
+                  key: MONGO_URL
             - name: JWT_SECRET
-              value: avesair
+              valueFrom:
+                secretKeyRef:
+                  name: application-secrets
+                  key: JWT_SECRET
             - name: JWT_EXPIRES_IN
-              value: "86400"
+              value: 1d
             - name: EMAIL_SERVICE
               value: gmail
             - name: EMAIL_USERNAME
-              value: avesairbooking@gmail.com
+              valueFrom:
+                secretKeyRef:
+                  name: application-secrets
+                  key: EMAIL_USERNAME
             - name: EMAIL_PASSWORD
-              value: hyxljjrhdndlhkkg
+              valueFrom:
+                secretKeyRef:
+                  name: application-secrets
+                  key: EMAIL_PASSWORD
             - name: FRONTEND_URL
               value: frontend-service.default
           ports:

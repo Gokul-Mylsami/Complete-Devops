@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongodb-replica-set-config
+spec:
+  completions: 1
+  template:
+    metadata:
+      name: mongodb-replica-set-config
+    spec:
+      containers:
+        - name: mongodb-replica-set-config
+          image: gokulmsfag/mongo-job
+          imagePullPolicy: Always
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "./script.sh mongodb-0.mongodb-service.default.svc.cluster.local mongodb-1.mongodb-service.default.svc.cluster.local mongodb-2.mongodb-service.default.svc.cluster.local"
+      restartPolicy: Never
