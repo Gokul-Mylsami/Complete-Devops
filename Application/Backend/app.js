@@ -13,8 +13,6 @@ const userRoutes = require("./routes/userRoutes");
 const flightRoutes = require("./routes/flightRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 
-const swaggerStats = require("swagger-stats");
-
 const app = express();
 
 app.use(function (req, res, next) {
@@ -39,8 +37,6 @@ app.use(function (req, res, next) {
   });
   next();
 });
-
-app.use(swaggerStats.getMiddleware());
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
