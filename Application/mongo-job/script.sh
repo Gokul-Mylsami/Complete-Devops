@@ -6,6 +6,4 @@ db.createCollection("users")
 db.users.insert({"name":"admin","role":"admin","email":"admin@avesair.com","phone":"9876543210","password" : "$2b$12$LoePoESVOisFl4KVokPQCOb0Jvnq59MXeq43IpJd821ZxbhHQVX6O"})
 EOF
 
-mongo --host $1 <<EOF
-
 echo "Done"

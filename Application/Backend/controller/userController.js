@@ -3,6 +3,7 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Email = require("../utils/email");
 const { promisify } = require("util");
+const { total_no_of_users_daily_login } = require("./prometheusController");
 
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
@@ -23,6 +24,9 @@ const createSendToken = (user, statusCode, req, res) => {
 
   // Remove password from output
   user.password = undefined;
+  user.passwordConfirm = undefined;
+
+  total_no_of_users_daily_login.inc();
 
   res.status(statusCode).json({
     status: "success",

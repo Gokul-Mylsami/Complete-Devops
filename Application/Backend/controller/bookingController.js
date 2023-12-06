@@ -4,6 +4,13 @@ const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Email = require("../utils/email");
+const {
+  total_bookings_today,
+  total_no_of_economy_seats_booked,
+  total_no_of_first_class_seats_booked,
+  total_no_of_premium_class_seats_booked,
+  total_no_tickets_cancelled,
+} = require("./prometheusController");
 
 exports.getAllBookings = catchAsync(async (req, res, next) => {
   const bookings = await Booking.find({}).select("+createdAt");
@@ -105,6 +112,10 @@ exports.createBooking = catchAsync(async (req, res, next) => {
     bookedFirstClassSeats * firstClassPrice +
     bookedPremiumClassSeats * premiumClassPrice;
 
+  total_no_of_economy_seats_booked.inc(bookedEconomySeats);
+  total_no_of_premium_class_seats_booked.inc(bookedPremiumClassSeats);
+  total_no_of_first_class_seats_booked.inc(bookedFirstClassSeats);
+
   const newBooking = await Booking.create({
     user: userId,
     flight: flightId,
@@ -112,6 +123,7 @@ exports.createBooking = catchAsync(async (req, res, next) => {
     price,
   });
 
+  total_bookings_today.inc();
   //send email to the user
   user = await User.findById(newBooking.user._id);
   await new Email(user).sendBookingConfirmation(newBooking);
@@ -172,6 +184,14 @@ exports.deleteBooking = catchAsync(async (req, res, next) => {
       },
     }
   );
+
+  total_bookings_today.dec();
+  total_no_tickets_cancelled.inc(
+    bookedEconomySeats + bookedPremiumClassSeats + bookedFirstClassSeats
+  );
+  total_no_of_economy_seats_booked.dec(bookedEconomySeats);
+  total_no_of_premium_class_seats_booked.dec(bookedPremiumClassSeats);
+  total_no_of_first_class_seats_booked.dec(bookedFirstClassSeats);
 
   await new Email(booking.user).sendBookingCancellation(booking);
   res.status(200).json({
