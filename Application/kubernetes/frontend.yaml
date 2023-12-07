@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: gokulmsfag/finaltask-frontend:1.0
+          image: gokulmsfag/finaltask-frontend:latest
           imagePullPolicy: Always
           resources:
             requests:

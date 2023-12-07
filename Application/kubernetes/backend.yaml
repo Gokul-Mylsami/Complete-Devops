@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: gokulmsfag/finaltask-backend:1.0
+          image: gokulmsfag/finaltask-backend:latest
           imagePullPolicy: Always
           resources:
             requests:
@@ -70,7 +70,7 @@ metadata:
 spec:
   selector:
     app: backend
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 8000
       targetPort: 8000
