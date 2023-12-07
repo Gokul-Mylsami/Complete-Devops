@@ -185,10 +185,8 @@ exports.deleteBooking = catchAsync(async (req, res, next) => {
     }
   );
 
-  total_bookings_today.dec();
-  total_no_tickets_cancelled.inc(
-    bookedEconomySeats + bookedPremiumClassSeats + bookedFirstClassSeats
-  );
+  // total_bookings_today.;
+  total_no_tickets_cancelled.inc();
   total_no_of_economy_seats_booked.dec(bookedEconomySeats);
   total_no_of_premium_class_seats_booked.dec(bookedPremiumClassSeats);
   total_no_of_first_class_seats_booked.dec(bookedFirstClassSeats);

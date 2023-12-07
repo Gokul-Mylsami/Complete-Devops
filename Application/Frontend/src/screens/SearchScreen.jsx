@@ -25,6 +25,7 @@ const SearchScreen = () => {
     setLoading(true);
     const response = await fetch("/api/v1/flights/airports");
     const data = await response.json();
+    console.log(data);
     if (data.status === "success") {
       dispatch(setAirports(data.data));
     } else {

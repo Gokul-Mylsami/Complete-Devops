@@ -59,7 +59,7 @@ spec:
                   name: application-secrets
                   key: EMAIL_PASSWORD
             - name: FRONTEND_URL
-              value: frontend-service.default
+              value: frontend.gokulmylsami.me
           ports:
             - containerPort: 8000
 ---
@@ -70,7 +70,7 @@ metadata:
 spec:
   selector:
     app: backend
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     - port: 8000
       targetPort: 8000
