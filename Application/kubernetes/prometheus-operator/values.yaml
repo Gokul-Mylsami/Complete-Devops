@@ -1,5 +1,0 @@
-prometheus-operator:
-  enabled: true
-
-kube-prometheus-stack:
-  enabled: true

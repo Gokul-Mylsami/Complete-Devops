@@ -1,3 +1,84 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+
+    alerting:
+      alertmanagers:
+        - static_configs:
+            - targets:
+                - alertmanager:9093
+    rule_files:
+      - alert.rules.yml
+
+    scrape_configs:
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
+      - job_name: 'backend'
+        static_configs:
+          - targets: ['backend-service.default:8000']
+      - job_name: 'ec2-instances'
+        ec2_sd_configs:
+          - region: 'us-east-1'
+        relabel_configs:
+          - source_labels: [__meta_ec2_public_ip]
+            target_label: __address__
+            replacement: '${1}:30910'
+
+  alert.rules.yml: |
+    groups:
+      - name: alert.rules
+        rules:
+          - alert: BackendDown
+            expr: up{job="backend"} == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Backend is down"
+              description: "Backend is down for more than 1 minute"
+          - alert: HighLatency
+            expr: histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job="backend"}[5m])) by (le)) > 0.5
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High latency"
+              description: "High latency for more than 1 minute"
+          - alert: HighThroughput
+            expr: sum(rate(http_request_duration_seconds_count{job="backend"}[5m])) by (le) > 100
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High throughput"
+              description: "High throughput for more than 1 minute"
+          - alert: HighErrorRate
+            expr: sum(rate(http_request_duration_seconds_count{job="backend", status=~"5.."}[5m])) by (le) / sum(rate(http_request_duration_seconds_count{job="backend"}[5m])) by (le) > 0.01
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High error rate"
+              description: "High error rate for more than 1 minute"
+          - alert: HighCPUUsage
+            expr: sum(rate(container_cpu_usage_seconds_total{namespace="default", container="backend"}[5m])) by (pod_name) / sum(container_spec_cpu_quota{namespace="default", container="backend"}) by (pod_name) * 100 > 80
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High CPU usage"
+              description: "High CPU usage for more than 1 minute"
+          - alert: HighMemoryUsage
+            expr: sum(container_memory_usage_bytes{namespace="default", container="backend"}) by (pod_name) / sum(container_spec_memory_limit_bytes{namespace="default", container="backend"}) by (pod_name) * 100 > 80
+            for: 1m
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,7 +103,7 @@ spec:
           resources:
             limits:
               memory: "128Mi"
-              cpu: "500m"
+              cpu: "100m"
           volumeMounts:
             - name: prometheus-config
               mountPath: /etc/prometheus
