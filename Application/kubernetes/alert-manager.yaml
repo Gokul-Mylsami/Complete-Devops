@@ -40,6 +40,12 @@ spec:
           args:
             - "--config.file=/etc/alertmanager/config/alertmanager.yaml"
             - "--storage.path=/data"
+          env:
+            - name: SLACK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: application-secrets
+                  key: SLACK_URL
           resources:
             limits:
               memory: "128Mi"

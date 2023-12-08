@@ -8,59 +8,9 @@ kind: ClusterRole
 metadata:
   name: kube-state-metrics
 rules:
-  - apiGroups: [""]
-    resources:
-      - configmaps
-      - namespaces
-      - nodes
-      - persistentvolumeclaims
-      - persistentvolumes
-      - pods
-      - secrets
-      - services
+  - apiGroups: ["*"]
+    resources: ["*"]
     verbs: ["list", "watch"]
-
-  - apiGroups: ["apps"]
-    resources:
-      - daemonsets
-      - deployments
-      - replicasets
-      - statefulsets
-    verbs: ["list", "watch"]
-
-  - apiGroups: ["autoscaling"]
-    resources:
-      - horizontalpodautoscalers
-    verbs: ["list", "watch"]
-
-  - apiGroups: ["batch"]
-    resources:
-      - cronjobs
-      - jobs
-    verbs: ["list", "watch"]
-
-  - apiGroups: ["extensions", "networking.k8s.io"]
-    resources:
-      - ingresses
-    verbs: ["list", "watch"]
-
-  - apiGroups: ["policy"]
-    resources:
-      - poddisruptionbudgets
-    verbs: ["list", "watch"]
-
-  - apiGroups: ["storage.k8s.io"]
-    resources:
-      - storageclasses
-      - volumeattachments
-    verbs: ["list", "watch"]
-
-  - apiGroups: ["admissionregistration.k8s.io"]
-    resources:
-      - mutatingwebhookconfigurations
-      - validatingwebhookconfigurations
-    verbs: ["list", "watch"]
-
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -96,7 +46,7 @@ spec:
         - name: kube-state-metrics
           image: quay.io/coreos/kube-state-metrics:latest
           ports:
-            - containerPort: 8181
+            - containerPort: 8080
           resources:
             requests:
               memory: "64Mi"
@@ -112,7 +62,8 @@ metadata:
 spec:
   selector:
     k8s-app: kube-state-metrics
+  type: ClusterIP
   ports:
     - name: http-metrics
-      port: 8181
-      targetPort: 8181
+      port: 8080
+      targetPort: 8080

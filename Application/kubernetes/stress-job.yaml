@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: stress-job
+spec:
+  completions: 1
+  template:
+    metadata:
+      name: stress-job
+    spec:
+      containers:
+        - name: stress-job
+          image: gokulmsfag/testing-job:1
+          imagePullPolicy: Always
+          command: ["node", "tester.js"]
+      restartPolicy: Never
