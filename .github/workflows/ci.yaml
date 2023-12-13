@@ -1,0 +1,28 @@
+name: Build Docker images
+on:
+  workflow_dispatch:
+    inputs:
+      image-tag:
+        description: "The tag of the image to build"
+        required: true
+jobs:
+  frontendBuild:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build frontend docker image
+        run: docker build -t 132596830915.dkr.ecr.us-east-1.amazonaws.com/avesair/finaltask-frontend:${{ github.event.inputs.image-tag }} ./Frontend
