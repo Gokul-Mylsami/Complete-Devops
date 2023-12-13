@@ -8,3 +8,4 @@ data:
   JWT_EXPIRE: 1d
   EMAIL_SERVICE: gmail
   FRONTEND_URL: frontend-service.default
+  BACKEND_API: backend-service.default:8000

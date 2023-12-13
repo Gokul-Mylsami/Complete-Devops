@@ -25,7 +25,10 @@ spec:
               cpu: "500m"
           env:
             - name: BACKEND_API
-              value: "backend-service.default:8000"
+              valueFrom:
+                configMapKeyRef:
+                  name: application-config
+                  key: BACKEND_API
           ports:
             - containerPort: 80
 ---

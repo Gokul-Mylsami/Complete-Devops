@@ -3,6 +3,7 @@ kind: Job
 metadata:
   name: mongodb-replica-set-config
 spec:
+  activeDeadlineSeconds: 90
   completions: 1
   template:
     metadata:
