@@ -25,4 +25,6 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build frontend docker image
-        run: docker build -t 132596830915.dkr.ecr.us-east-1.amazonaws.com/avesair/finaltask-frontend:${{ github.event.inputs.image-tag }} ./Frontend
+        run: |
+          docker build -t 132596830915.dkr.ecr.us-east-1.amazonaws.com/avesair/finaltask-frontend:${{ github.event.inputs.image-tag }} ./Frontend
+          docker push 132596830915.dkr.ecr.us-east-1.amazonaws.com/avesair/finaltask-frontend:${{ github.event.inputs.image-tag }}
