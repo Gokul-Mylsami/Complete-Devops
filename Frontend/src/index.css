@@ -19,9 +19,9 @@ body::-webkit-scrollbar {
 }
 
 :root {
-  --color-primary: #fa5252;
-  --color-secondary: #ff6b6b;
-  --color-tertiary: #ff8787;
+  --color-primary: #339af0;
+  --color-secondary: #4dabf7;
+  --color-tertiary: #a5d8ff;
   --color-white: #fff;
   --color-black: #333;
   --color-gray: #555;
