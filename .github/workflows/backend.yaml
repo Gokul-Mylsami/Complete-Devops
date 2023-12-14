@@ -1,4 +1,4 @@
-name: Build Docker images
+name: Build Backend Docker image
 on:
   workflow_dispatch:
     inputs:
