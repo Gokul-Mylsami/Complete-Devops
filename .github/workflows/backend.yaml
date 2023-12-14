@@ -5,8 +5,9 @@ on:
       image-tag:
         description: "The tag of the image to build"
         required: true
+
 jobs:
-  frontendBuild:
+  backendBuild:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,10 +21,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Build frontend docker image
-        run: docker build -t 132596830915.dkr.ecr.us-east-1.amazonaws.com/frontend:${{ github.event.inputs.image-tag }} ./Frontend
+      - name: Build backend docker image
+        run: docker build -t ${{ secrets.DOCKER_REPO }}/backend:${{ github.event.inputs.image-tag }} ./Backend
 
-      - name: Push frontend docker image
+      - name: Push backend docker image
         run: |
-          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 132596830915.dkr.ecr.us-east-1.amazonaws.com
-          docker push 132596830915.dkr.ecr.us-east-1.amazonaws.com/frontend:${{ github.event.inputs.image-tag }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.DOCKER_REPO }}
+          docker push ${{ secrets.DOCKER_REPO }}/backend:${{ github.event.inputs.image-tag }}
