@@ -27,3 +27,13 @@ jobs:
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.DOCKER_REPO }}
           docker push ${{ secrets.DOCKER_REPO }}/frontend:${{ github.event.inputs.image-tag }}
+
+  updateNewImage:
+    needs: frontendBuild
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get code
+        run: |
+          git clone https://github.com/Gokul-Mylsami/avesair-helm-charts.git
+          cd avesair-helm-charts

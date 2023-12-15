@@ -17,9 +17,6 @@ spec:
           image: gokulmsfag/finaltask-backend:latest
           imagePullPolicy: Always
           resources:
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
             limits:
               memory: "512Mi"
               cpu: "1"
