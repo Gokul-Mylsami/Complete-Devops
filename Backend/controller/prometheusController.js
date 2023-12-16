@@ -60,7 +60,7 @@ const getTodalNoOfFlights = async () => {
   total_no_of_flights.set(flights.length);
 };
 
-// getTodalNoOfFlights();
+getTodalNoOfFlights();
 
 register.registerMetric(http_request_counter);
 register.registerMetric(http_request_duration);
