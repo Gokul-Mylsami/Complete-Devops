@@ -20,7 +20,13 @@ spec:
               cpu: "100m"
           ports:
             - containerPort: 3000
-
+          volumeMounts:
+            - name: grafana-pvc
+              mountPath: /var/lib/grafana
+  volumes:
+    - name: grafana-pvc
+      persistentVolumeClaim:
+        claimName: grafana-pvc
 ---
 apiVersion: v1
 kind: Service

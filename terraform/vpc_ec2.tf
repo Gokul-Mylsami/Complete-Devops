@@ -87,11 +87,6 @@ resource "aws_security_group" "sg" {
   }
 }
 
-resource "aws_ecr_repository" "my-repo" {
-  name = "frontend"
-}
-
-
 module "security-groups" {
   source = "./sg_eks"
   vpc_id = aws_vpc.vpc.id
@@ -118,9 +113,3 @@ module "secret_manager" {
   source = "./secret-manager"
 }
 
-module "helm" {
-  source                                    = "./helm"
-  aws_eks_cluster_eks_endpoint              = module.eks.endpoint
-  aws_eks_cluster_eks_certificate_authority = module.eks.certificate_authority
-  aws_eks_cluster_id                        = module.eks.id
-}

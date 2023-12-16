@@ -13,6 +13,7 @@ resource "aws_security_group" "my-eks-efs-sg" {
 
 resource "aws_efs_file_system" "efs-1" {
   creation_token = "eks-efs-1"
+  encrypted      = true
 
   tags = {
     Name = "eks-efs-1"
@@ -28,7 +29,7 @@ resource "aws_efs_mount_target" "efs-1-mount" {
 
 resource "aws_efs_file_system" "efs-2" {
   creation_token = "eks-efs-2"
-
+  encrypted      = true
   tags = {
     Name = "eks-efs-2"
   }
@@ -44,7 +45,7 @@ resource "aws_efs_mount_target" "efs-2-mount" {
 
 resource "aws_efs_file_system" "efs-3" {
   creation_token = "eks-efs-3"
-
+  encrypted      = true
   tags = {
     Name = "eks-efs-3"
   }

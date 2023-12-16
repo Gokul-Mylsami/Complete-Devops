@@ -45,13 +45,3 @@ spec:
                 name: prometheus
                 port:
                   number: 9090
-    - host: alertmanager.gokulmylsami.me
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: alertmanager-service
-                port:
-                  number: 9093
