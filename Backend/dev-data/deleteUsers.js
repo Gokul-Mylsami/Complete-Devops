@@ -1,6 +1,6 @@
 const Users = require("../models/userModel");
 const dotenv = require("dotenv");
-
+const mongoose = require("mongoose");
 // dotenv.config({ path: "./../.env" });
 
 mongoose.connect(process.env.MONGO_URL);
@@ -45,3 +45,5 @@ const addAdmin = async () => {
 addAdmin().then(() => {
   console.log("Admin added");
 });
+
+process.exit();

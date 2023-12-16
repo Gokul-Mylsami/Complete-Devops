@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "my-eks-secret" {
-  name = "my-eks-secret"
+  name = "my-secret"
 }
 
 resource "aws_secretsmanager_secret_version" "my-eks-secret-version" {

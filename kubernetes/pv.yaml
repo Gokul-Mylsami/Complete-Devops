@@ -9,9 +9,10 @@ spec:
   accessModes:
     - "ReadWriteMany"
   storageClassName: aws-efs-sc
+  persistentVolumeReclaimPolicy: Retain
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-0b160979a18957eec
+    volumeHandle: fs-0b870f87a44595164
 
 ---
 apiVersion: v1
@@ -25,9 +26,10 @@ spec:
   accessModes:
     - "ReadWriteMany"
   storageClassName: aws-efs-sc
+  persistentVolumeReclaimPolicy: Retain
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-0fc3deefe7670967a
+    volumeHandle: fs-073b250e348f9b134
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -40,8 +42,9 @@ spec:
   accessModes:
     - "ReadWriteMany"
   storageClassName: aws-efs-sc
+  persistentVolumeReclaimPolicy: Retain
   csi:
     driver: efs.csi.aws.com
-    volumeHandle: fs-06f24b7d93b73a626
+    volumeHandle: fs-0302c4c0f6c5e69ce
 ---
 
