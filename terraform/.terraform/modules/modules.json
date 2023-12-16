@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"eks","Source":"./eks","Dir":"eks"},{"Key":"security-groups","Source":"./sg_eks","Dir":"sg_eks"}]}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"efs","Source":"./efs","Dir":"efs"},{"Key":"eks","Source":"./eks","Dir":"eks"},{"Key":"helm","Source":"./helm","Dir":"helm"},{"Key":"secret_manager","Source":"./secret-manager","Dir":"secret-manager"},{"Key":"security-groups","Source":"./sg_eks","Dir":"sg_eks"}]}

@@ -14,15 +14,12 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: gokulmsfag/finaltask-frontend:latest
+          image: 132596830915.dkr.ecr.us-east-1.amazonaws.com/frontend:blue
           imagePullPolicy: Always
           resources:
-            requests:
-              memory: "64Mi"
-              cpu: "300m"
             limits:
               memory: "128Mi"
-              cpu: "500m"
+              cpu: "200m"
           env:
             - name: BACKEND_API
               valueFrom:

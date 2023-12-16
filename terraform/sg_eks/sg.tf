@@ -11,6 +11,14 @@ resource "aws_security_group" "worker_node_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "Allow Prometheus inbound traffic"
+    from_port   = 30910
+    to_port     = 30910
+    protocol    = "tcp"
+    cidr_blocks = [var.cidr]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0

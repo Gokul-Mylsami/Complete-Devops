@@ -2,8 +2,6 @@ provider "aws" {
   region = var.location
 }
 
-
-
 resource "aws_vpc" "vpc" {
   cidr_block = var.vpc-cidr
 }
@@ -89,10 +87,23 @@ resource "aws_security_group" "sg" {
   }
 }
 
+resource "aws_ecr_repository" "my-repo" {
+  name = "frontend"
+}
+
 
 module "security-groups" {
   source = "./sg_eks"
   vpc_id = aws_vpc.vpc.id
+  cidr   = var.vpc-cidr
+}
+
+module "efs" {
+  source     = "./efs"
+  vpc_id     = aws_vpc.vpc.id
+  cidr       = var.vpc-cidr
+  subnet_ids = [aws_subnet.subnet-1.id, aws_subnet.subnet-2.id]
+
 }
 
 module "eks" {
@@ -101,4 +112,15 @@ module "eks" {
   subnet_ids     = [aws_subnet.subnet-1.id, aws_subnet.subnet-2.id]
   sg_ids         = module.security-groups.security_group_public
   instance_types = var.instance_type
+}
+
+module "secret_manager" {
+  source = "./secret-manager"
+}
+
+module "helm" {
+  source                                    = "./helm"
+  aws_eks_cluster_eks_endpoint              = module.eks.endpoint
+  aws_eks_cluster_eks_certificate_authority = module.eks.certificate_authority
+  aws_eks_cluster_id                        = module.eks.id
 }
