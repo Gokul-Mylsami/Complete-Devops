@@ -46,3 +46,14 @@ jobs:
         run: |
           cd avesair-helm-charts
           cat values.yaml
+      - name: Commit the changes
+        run: |
+          cd avesair-helm-charts
+          git config --global user.email "gokulmylsami@gmail.com"
+          git config --global user.name "Gokul-Mylsami"
+          git add .
+          git commit -m "Update the frontend image tag to ${{ github.event.inputs.image-tag }}"
+      - name: Push the changes
+        run: |
+          cd avesair-helm-charts
+          git push
