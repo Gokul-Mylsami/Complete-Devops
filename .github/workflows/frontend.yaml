@@ -37,3 +37,10 @@ jobs:
         run: |
           git clone https://github.com/Gokul-Mylsami/avesair-helm-charts.git
           cd avesair-helm-charts
+      - name: Update the image tag
+        run: |
+          new_tag=${{ github.event.inputs.image-tag }}
+          sed -i "s/\(frontendTag:\s*\).*/\1$new_tag/" values.yaml
+      - name: Show the values
+        run: |
+          cat values.yaml
