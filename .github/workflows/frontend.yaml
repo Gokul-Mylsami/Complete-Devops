@@ -44,4 +44,5 @@ jobs:
           sed -i "s/\(frontendTag:\s*\).*/\1$new_tag/" values.yaml
       - name: Show the values
         run: |
+          cd avesair-helm-charts
           cat values.yaml
