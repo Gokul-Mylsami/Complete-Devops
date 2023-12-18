@@ -45,9 +45,14 @@ jobs:
         run: |
           git clone https://${{ secrets.ACCESS_GITHUB }}@github.com/Gokul-Mylsami/avesair-helm-charts.git
           cd avesair-helm-charts
+
+      - name: Set Image Tag
+        id: set-image-tag
+        run: echo "::set-output name=tag::${{ github.event.inputs.image-tag || 'latest' }}"
+
       - name: Update the image tag
         run: |
-          new_tag=${{ needs.Backend-Docker-Image.outputs.tag }}
+          new_tag=${{ steps.set-image-tag.outputs.tag }}
           echo "New tag is $new_tag"
           cd avesair-helm-charts
           sed -i "s/\(backendTag:\s*\).*/\1'$new_tag'/" values.yaml
@@ -61,5 +66,5 @@ jobs:
           git add .
           git config --global user.email "gokulmylsami@gmail.com"
           git config --global user.name "Gokul-Mylsami"
-          git commit -m "Update the Backend image tag to ${{ needs.Backend-Docker-Image.outputs.tag }}"
+          git commit -m "Update the Backend image tag to ${{ steps.set-image-tag.outputs.tag }}"
           git push
