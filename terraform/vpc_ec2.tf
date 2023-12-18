@@ -98,7 +98,6 @@ module "efs" {
   vpc_id     = aws_vpc.vpc.id
   cidr       = var.vpc-cidr
   subnet_ids = [aws_subnet.subnet-1.id, aws_subnet.subnet-2.id]
-
 }
 
 module "eks" {

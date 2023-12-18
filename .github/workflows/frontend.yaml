@@ -53,7 +53,4 @@ jobs:
           git config --global user.name "Gokul-Mylsami"
           git add .
           git commit -m "Update the frontend image tag to ${{ github.event.inputs.image-tag }}"
-      - name: Push the changes
-        run: |
-          cd avesair-helm-charts
           git push
