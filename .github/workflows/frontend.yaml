@@ -4,7 +4,7 @@ on:
     inputs:
       image-tag:
         description: "The tag of the image to build"
-        default: "latest"
+        required: true
   push:
     branches:
       - main

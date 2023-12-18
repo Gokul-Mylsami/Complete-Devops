@@ -4,8 +4,7 @@ on:
     inputs:
       image-tag:
         description: "The tag of the image to build"
-        default: "latest"
-
+        required: true
 jobs:
   Backend-Docker-Image:
     runs-on: ubuntu-latest
@@ -20,17 +19,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Set Image Tag
+        id: set-image-tag
+        run: echo "::set-output name=tag::${{ github.event.inputs.image-tag || 'latest' }}"
+
       - name: Build backend docker image
-        run: docker build -t ${{ secrets.DOCKER_REPO }}/backend:${{ github.event.inputs.image-tag }} ./Backend
+        run: docker build -t ${{ secrets.DOCKER_REPO }}/backend:${{ steps.set-image-tag.outputs.tag }} ./Backend
 
       - name: Push backend docker image
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.DOCKER_REPO }}
-          docker push ${{ secrets.DOCKER_REPO }}/backend:${{ github.event.inputs.image-tag }}
+          docker push ${{ secrets.DOCKER_REPO }}/backend:${{ steps.set-image-tag.outputs.tag }}
 
   Update-New-Image-Tag:
     runs-on: ubuntu-latest
-    needs: Backend-Docker-Image
+    needs:
+      - Backend-Docker-Image
     steps:
       - name: Get code
         run: |
@@ -38,7 +42,7 @@ jobs:
           cd avesair-helm-charts
       - name: Update the image tag
         run: |
-          new_tag=${{ github.event.inputs.image-tag }}
+          new_tag=${{ needs.Backend-Docker-Image.outputs.tag }}
           cd avesair-helm-charts
           sed -i "s/\(backendTag:\s*\).*/\1'$new_tag'/" values.yaml
       - name: Show the values
@@ -51,5 +55,5 @@ jobs:
           git add .
           git config --global user.email "gokulmylsami@gmail.com"
           git config --global user.name "Gokul-Mylsami"
-          git commit -m "Update the Backend image tag to ${{ github.event.inputs.image-tag }}"
+          git commit -m "Update the Backend image tag to ${{ needs.Backend-Docker-Image.outputs.tag }}"
           git push
