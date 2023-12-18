@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: grafana
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: grafana
@@ -13,20 +14,13 @@ spec:
     spec:
       containers:
         - name: grafana
-          image: grafana/grafana
+          image: grafana/grafana:latest
           resources:
             limits:
               memory: "128Mi"
               cpu: "100m"
           ports:
             - containerPort: 3000
-          volumeMounts:
-            - name: grafana-pvc
-              mountPath: /var/lib/grafana
-  volumes:
-    - name: grafana-pvc
-      persistentVolumeClaim:
-        claimName: grafana-pvc
 ---
 apiVersion: v1
 kind: Service
