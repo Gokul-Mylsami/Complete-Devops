@@ -5,6 +5,11 @@ on:
       image-tag:
         description: "The tag of the image to build"
         required: true
+  push:
+    branches:
+      - main
+    paths:
+      - Backend/**
 jobs:
   Backend-Docker-Image:
     runs-on: ubuntu-latest
