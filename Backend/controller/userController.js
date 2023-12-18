@@ -8,6 +8,14 @@ const { total_no_of_users_daily_login } = require("./prometheusController");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
+const {
+  sendWelcomeEmail,
+  sendBookingConfirmation,
+  sendBookingCancellation,
+  sendFlightCancellation,
+  sendPasswordReset,
+} = require("../utils/sendEmailSES");
+
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
@@ -51,7 +59,9 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm,
   });
 
-  await new Email(newUser).sendWelcome(name);
+  // await new Email(newUser).sendWelcome(name);
+  sendWelcomeEmail(newUser.email, newUser.name);
+
   createSendToken(newUser, 201, req, res);
 });
 
@@ -200,7 +210,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 3) Send it to user's email
   try {
     const resetURL = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`;
-    await new Email(user, resetURL).sendPasswordReset();
+    // await new Email(user, resetURL).sendPasswordReset();
+    sendPasswordReset(user.email, resetURL);
     // console.log(resetToken);
 
     res.status(200).json({

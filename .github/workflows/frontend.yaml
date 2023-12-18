@@ -5,6 +5,10 @@ on:
       image-tag:
         description: "The tag of the image to build"
         required: true
+  # push:
+  #   branches:
+  #     - main
+
 jobs:
   Frontend-Build:
     runs-on: ubuntu-latest

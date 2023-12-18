@@ -11,6 +11,13 @@ const {
   total_no_of_premium_class_seats_booked,
   total_no_tickets_cancelled,
 } = require("./prometheusController");
+const {
+  sendWelcomeEmail,
+  sendBookingConfirmation,
+  sendBookingCancellation,
+  sendFlightCancellation,
+  sendPasswordReset,
+} = require("../utils/sendEmailSES");
 
 exports.getAllBookings = catchAsync(async (req, res, next) => {
   const bookings = await Booking.find({}).select("+createdAt");
@@ -126,7 +133,9 @@ exports.createBooking = catchAsync(async (req, res, next) => {
   total_bookings_today.inc();
   //send email to the user
   user = await User.findById(newBooking.user._id);
-  await new Email(user).sendBookingConfirmation(newBooking);
+  // await new Email(user).sendBookingConfirmation(newBooking);
+
+  sendBookingConfirmation(user.email, user.name, newBooking);
 
   res.status(201).json({
     status: "success",
@@ -191,7 +200,8 @@ exports.deleteBooking = catchAsync(async (req, res, next) => {
   // total_no_of_premium_class_seats_booked.dec(bookedPremiumClassSeats);
   // total_no_of_first_class_seats_booked.dec(bookedFirstClassSeats);
 
-  await new Email(booking.user).sendBookingCancellation(booking);
+  // await new Email(booking.user).sendBookingCancellation(booking);
+  sendBookingCancellation(booking.user.email, booking.user.name);
   res.status(200).json({
     status: "success",
   });

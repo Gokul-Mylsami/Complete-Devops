@@ -1,7 +1,7 @@
 version: "3"
 services:
   backend:
-    build: ./backend
+    build: ./Backend
     ports:
       - "8000:8000"
     environment:
@@ -9,16 +9,19 @@ services:
       - NODE_ENV=production
       - MONGO_URL=mongodb://mongo:27017/avesair
       - JWT_SECRET=avesair
-      - JWT_EXPIRE=1d
-      - EMAIL_SERVICE = gmail
-      - EMAIL_USERNAME = avesairbooking@gmail.com
-      - EMAIL_PASSWORD = hyxljjrhdndlhkkg
-      - FRONTEND_URL = localhost:3000
+      - JWT_EXPIRES_IN=1d
+      - EMAIL_SERVICE=gmail
+      - EMAIL_USERNAME=avesairbooking@gmail.com
+      - EMAIL_PASSWORD=hyxljjrhdndlhkkg
+      - FRONTEND_URL=localhost:3000
+      - AWS_ACCESS_KEY=AKIAVLU6JOO6NJUPUYON
+      - AWS_SECRET_ACCESS_KEY=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
+      - AWS_REGION=us-east-1
     depends_on:
       - mongo
 
   frontend:
-    build: ./frontend
+    build: ./Frontend
     ports:
       - "3000:80"
     environment:

@@ -61,37 +61,6 @@ resource "aws_route_table_association" "my-rt-assoc-2" {
   route_table_id = aws_route_table.my-rt.id
 }
 
-resource "aws_security_group" "sg" {
-  name        = "security-group-1"
-  description = "Allow SSH and HTTP inbound traffic"
-  vpc_id      = aws_vpc.vpc.id
-
-  ingress {
-    description = "SSH from VPC"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    description = "Allow all outbound traffic"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "my-sg-1"
-  }
-}
-
-module "security-groups" {
-  source = "./sg_eks"
-  vpc_id = aws_vpc.vpc.id
-  cidr   = var.vpc-cidr
-}
 
 module "efs" {
   source     = "./efs"
