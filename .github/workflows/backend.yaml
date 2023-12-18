@@ -7,7 +7,7 @@ on:
         required: true
 
 jobs:
-  backendBuild:
+  Backend-Docker-Image:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,3 +28,28 @@ jobs:
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.DOCKER_REPO }}
           docker push ${{ secrets.DOCKER_REPO }}/backend:${{ github.event.inputs.image-tag }}
+
+  Update-New-Image-Tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        run: |
+          git clone https://${{ secrets.ACCESS_GITHUB }}@github.com/Gokul-Mylsami/avesair-helm-charts.git
+          cd avesair-helm-charts
+      - name: Update the image tag
+        run: |
+          new_tag=${{ github.event.inputs.image-tag }}
+          cd avesair-helm-charts
+          sed -i "s/\(backendTag:\s*\).*/\1$new_tag/" values.yaml
+      - name: Show the values
+        run: |
+          cd avesair-helm-charts
+          cat values.yaml
+      - name: Commit the changes
+        run: |
+          cd avesair-helm-charts
+          git add .
+          git config --global user.email "gokulmylsami@gmail.com"
+          git config --global user.name "Gokul-Mylsami"
+          git commit -m "Update the Backend image tag to ${{ github.event.inputs.image-tag }}"
+          git push
