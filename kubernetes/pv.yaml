@@ -13,7 +13,6 @@ spec:
   csi:
     driver: efs.csi.aws.com
     volumeHandle: fs-040d9f25ab22d95bc
-
 ---
 apiVersion: v1
 kind: PersistentVolume

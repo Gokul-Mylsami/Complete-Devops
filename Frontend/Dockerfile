@@ -10,4 +10,4 @@ FROM nginx:latest
 COPY --from=builder /app/build /usr/share/nginx/html
 COPY /conf/templates/ /etc/nginx/templates/
 EXPOSE 80
-CMD [ "nginx", "-g", "daemon off;" ]
+CMD ["nginx", "-g", "daemon off;"]
