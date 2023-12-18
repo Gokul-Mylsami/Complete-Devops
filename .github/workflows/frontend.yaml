@@ -4,10 +4,10 @@ on:
     inputs:
       image-tag:
         description: "The tag of the image to build"
-        required: true
-  # push:
-  #   branches:
-  #     - main
+        default: "latest"
+  push:
+    branches:
+      - main
 
 jobs:
   Frontend-Build:
