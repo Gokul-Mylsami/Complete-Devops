@@ -20,6 +20,9 @@ MongoDB StatefulSet
 ## CloudFlare
 DNS and SSL managed with CloudFlare
 
+## Helm
+Templating K8s manifests
+
 ## CI/CD
 - GitHub Actions
 - ArgoCD
