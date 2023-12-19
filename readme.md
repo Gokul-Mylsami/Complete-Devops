@@ -13,7 +13,7 @@ Backend Deployment
 MongoDB StatefulSet
 
 ## AWS
-- Created VPC
+- Created EKS using Terraform
 - Terraform Secret Manager for storing secrets
 - EFS for storage
 
