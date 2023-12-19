@@ -1,7 +1,8 @@
 # Summary
 
+
 ## Table of Contents
-- [Application Part] (#application-part)
+- [Application Part](#application-part)
 - [Kubernetes Part](#kubernetes-part)
 - [AWS](#aws)
 - [CloudFlare](#cloudflare)
@@ -9,13 +10,13 @@
 - [Prometheus Part](#prometheus-part)
 
 ## Application Part
-Amazon SES For Mailing
-Custom Prometheus Metrics
+- Amazon SES For Mailing
+- Custom Prometheus Metrics
 
 ## Kubernetes Part
-Frontend Deployment  
-Backend Deployment  
-MongoDB StatefulSet
+- Frontend Deployment  
+- Backend Deployment  
+- MongoDB StatefulSet
 
 ## AWS
 - Created EKS using Terraform
@@ -23,17 +24,16 @@ MongoDB StatefulSet
 - EFS for storage
 
 ## CloudFlare
-DNS and SSL managed with CloudFlare
+- DNS and SSL managed with CloudFlare
 
 ## Helm
-Templating K8s manifests
+- Templating K8s manifests
 
 ## CI/CD
 - GitHub Actions
 - ArgoCD
 
 ## Prometheus Part
-Custom Flight metrics
+- Custom Flight metrics
 
----
 
