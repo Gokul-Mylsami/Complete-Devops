@@ -1,11 +1,16 @@
 # Summary
 
 ## Table of Contents
+- [Application Part] (#application-part)
 - [Kubernetes Part](#kubernetes-part)
 - [AWS](#aws)
 - [CloudFlare](#cloudflare)
 - [CI/CD](#ci-cd)
 - [Prometheus Part](#prometheus-part)
+
+## Application Part
+Amazon SES For Mailing
+Custom Prometheus Metrics
 
 ## Kubernetes Part
 Frontend Deployment  
