@@ -33,7 +33,5 @@
 - GitHub Actions
 - ArgoCD
 
-## Prometheus Part
+## Grafana Part
 - Custom Flight metrics
-
-
