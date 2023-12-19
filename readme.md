@@ -1,24 +1,32 @@
-Summary : 
+# Your Flight Booking App
 
-Flight Ticket Booking Application with AWS SES feature
+## Table of Contents
+- [Kubernetes Part](#kubernetes-part)
+- [AWS](#aws)
+- [CloudFlare](#cloudflare)
+- [CI/CD](#ci-cd)
+- [Prometheus Part](#prometheus-part)
 
-Kubernetes Part:
+## Kubernetes Part
+Frontend Deployment  
+Backend Deployment  
+MongoDB StatefulSet
 
-Frontend -> Deployment
-Backend  -> Deployment
-MongoDB  -> Statefull Set
+## AWS
+- Created VPC
+- Terraform Secret Manager for storing secrets
+- EFS for storage
 
-AWS: 
-Created VPC -> Terraform
-Secret Managet -> Storing Secrets
-EFS -> For storage
+## CloudFlare
+DNS and SSL managed with CloudFlare
 
-CloudFlare: 
-DNS and SSL -> CloudFlare
+## CI/CD
+- GitHub Actions
+- ArgoCD
 
-CI/CD:
-Github actions
-ArgoCD
-
-Prometheus Part : 
+## Prometheus Part
 Custom Flight metrics
+
+---
+
+&copy; 2023 Your Flight Booking App. All rights reserved.
