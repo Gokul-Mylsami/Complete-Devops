@@ -32,4 +32,3 @@ Custom Flight metrics
 
 ---
 
-&copy; 2023 Your Flight Booking App. All rights reserved.
