@@ -21,31 +21,38 @@ resource "helm_release" "argocd" {
 
 }
 
-// install efs csi driver
-resource "helm_release" "efs_csi" {
-  name       = "efs-csi-driver"
-  repository = "https://kubernetes-sigs.github.io/aws-efs-csi-driver/"
-  chart      = "aws-efs-csi-driver"
-  namespace  = "kube-system"
 
-}
 
-resource "helm_release" "nginx_ingress" {
-  name             = "nginx-ingress"
-  repository       = "https://kubernetes.github.io/ingress-nginx"
-  chart            = "ingress-nginx"
-  namespace        = "ingress-nginx"
-  create_namespace = true
-}
 
-resource "helm_release" "external-secrets" {
-  name             = "external-secrets"
-  repository       = "https://charts.external-secrets.io"
-  chart            = "external-secrets"
-  namespace        = "external-secrets"
-  create_namespace = true
-  set {
-    name  = "installCRDs"
-    value = "true"
-  }
-}
+
+
+
+
+# // install efs csi driver
+# resource "helm_release" "efs_csi" {
+#   name       = "efs-csi-driver"
+#   repository = "https://kubernetes-sigs.github.io/aws-efs-csi-driver/"
+#   chart      = "aws-efs-csi-driver"
+#   namespace  = "kube-system"
+
+# }
+
+# resource "helm_release" "nginx_ingress" {
+#   name             = "nginx-ingress"
+#   repository       = "https://kubernetes.github.io/ingress-nginx"
+#   chart            = "ingress-nginx"
+#   namespace        = "ingress-nginx"
+#   create_namespace = true
+# }
+
+# resource "helm_release" "external-secrets" {
+#   name             = "external-secrets"
+#   repository       = "https://charts.external-secrets.io"
+#   chart            = "external-secrets"
+#   namespace        = "external-secrets"
+#   create_namespace = true
+#   set {
+#     name  = "installCRDs"
+#     value = "true"
+#   }
+# }
