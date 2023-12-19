@@ -6,11 +6,6 @@ const getDataBakend = async (i) => {
   console.log(i + data.status);
 };
 
-const getFrontend = async () => {
-  const response = await fetch("http://frontend-service.default:80");
-  const data = await response.json();
-};
-
 for (let i = 0; i < 4000; i++) {
   getDataBakend(i);
 }
